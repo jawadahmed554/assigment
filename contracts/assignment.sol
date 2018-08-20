@@ -55,11 +55,54 @@ contract abc {
 
     }
   return(nameName, scoreScore);
+  
+      
+      
   }
-     
+  
+
+    function getIndUser(uint _level, uint _score) public view returns (bytes32, uint) {
+        User[] storage u = userAccess[_level];
+        
+        for (uint i = 0; i < u.length; i++) {
+            if (u[i].score == _score) {
+                return (u[i].name, u[i].score);
+            }
+        }
+    }
+    
+    function getUserByRange(uint _level, uint _score) public view returns (bytes32[], uint[]) {
+        User[] storage u = userAccess[_level];
+        
+        bytes32[] memory b = new bytes32[](u.length);
+        uint[] memory ui = new uint[](u.length);
+        
+        for (uint i = 0; i < u.length; i++) {
+            if(u[i].score > _score) {
+                b[i] = u[i].name;
+                ui[i] = u[i].score;
+            }
+        } return (b, ui);
+    }
+    /*event logUser(string, uint);
+    function getUserByRangelog(uint _level, uint _score) public returns(string, uint) {
+        User[] memory u = userAccess[_level];
+        
+        for (uint i=0;i<u.length;i++) {
+            if (u[i].score > _score) {
+                emit logUser(u[i].name, u[i].score);
+            }
+    }
+ 
+
+}*/
+
+
 }
+
+
+
 //User memory currentUser;
       //currentUser = userArray[i];
       //nameName[i] = currentUser.name;
       //scoreScore[i] = currentUser.score;
-  
